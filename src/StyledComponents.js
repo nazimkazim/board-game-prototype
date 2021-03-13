@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { supplementaryColor } from './colorUtils';
+import { supplementaryColor, accentColor, darkColor, darkColorDarker_1 } from './colorUtils';
 import { breatheAnimation } from './StyledComponentsAnimation';
 
 export const Parent = styled.div`
@@ -29,9 +29,6 @@ export const Cell = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
-  -webkit-box-shadow: ${props => props.move && `10px 10px 5px 0px rgba(0,0,0,0.75)`};
-  -moz-box-shadow: ${props => props.move && `10px 10px 5px 0px rgba(0,0,0,0.75)`};
-  box-shadow: ${props => props.move && `10px 10px 5px 0px rgba(0,0,0,0.75)`};
   background:url(${props => props.backgroundImage && props.backgroundImage});
   background-color: ${props => props.backgroundColor ? props.backgroundColor : 'blue'};
   background-position: center;
@@ -43,10 +40,18 @@ export const Cell = styled.div`
 `;
 
 export const Button = styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-transform:uppercase;
   position:absolute;
   min-width:30px;
+  padding:5px;
   height:30px;
   top:2px;
   left:10px;
-  background-color:red;
+  background-color:${accentColor};
+  cursor:pointer;
+  border-radius:3px;
+  color:${darkColor};
 `;
