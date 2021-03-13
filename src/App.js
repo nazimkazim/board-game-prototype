@@ -8,37 +8,65 @@ const _cells = [
 
     gridArea: '1/ 1 / 2 / 2',
     id: uuidv4(),
-    move: false
+    move: false,
+    topBorder: true,
+    leftBorder: true,
+    rightBorder:false,
+    bottomBorder:true
   }, {
 
     gridArea: '1 / 2 / 2 / 3',
     id: uuidv4(),
-    move: false
+    move: false,
+    topBorder: true,
+    leftBorder: true,
+    rightBorder:true,
+    bottomBorder:true
   }, {
 
     gridArea: '1 / 3 / 2 / 4',
     id: uuidv4(),
-    move: false
+    move: false,
+    topBorder: true,
+    leftBorder: false,
+    rightBorder:true,
+    bottomBorder:true
   }, {
 
     gridArea: '1 / 4 / 2 / 5',
     id: uuidv4(),
-    move: false
+    move: false,
+    topBorder: true,
+    leftBorder: false,
+    rightBorder:true,
+    bottomBorder:true
   }, {
 
     gridArea: '1 / 5 / 2 / 6',
     id: uuidv4(),
-    move: false
+    move: false,
+    topBorder: false,
+    leftBorder: false,
+    rightBorder:true,
+    bottomBorder:true
   }, {
 
     gridArea: '2 / 5 / 3 / 6',
     id: uuidv4(),
-    move: false
+    move: false,
+    topBorder: true,
+    leftBorder: true,
+    rightBorder:true,
+    bottomBorder:true
   }, {
 
     gridArea: '3 / 5 / 4 / 6',
     id: uuidv4(),
-    move: false
+    move: false,
+    topBorder: true,
+    leftBorder: true,
+    rightBorder:true,
+    bottomBorder:true
   }, {
 
     gridArea: '4 / 5 / 5 / 6',
@@ -102,10 +130,15 @@ const Parent = styled.div`
 
 const Cell = styled.div`
   grid-area:${props => props.gridArea};
+  border-top:${props => props.topBorder && `2px solid black`};
+  border-left:${props => props.leftBorder && `2px solid black`};
+  border-right:${props => props.rightBorder && `2px solid black`};
+  border-bottom:${props => props.bottomBorder && `2px solid black`};
   border:${props => props.move && `2px solid yellow`};
   height:calc(100vh / 5); 
-  weight:calc(100vh / 5);
+  width:calc(100vh / 5);
   background-color: blue;
+  cursor:pointer;
 `;
 
 const Button = styled.div`
@@ -122,10 +155,19 @@ function App() {
   const [cells, setCells] = useState(_cells);
   const [position, setPosition] = useState(0);
 
+  if (position > cells.length) {
+    console.log('fdgfdg');
+  }
+
   const movePlayer = () => {
     const randomNum = getRandomIntInclusive(1, 6);
-    const found = cells.filter((_, i) => i === randomNum);
+    const newCells = [...cells];
+    newCells[position].move = false;
+    newCells[position + randomNum].move = true;
+    setPosition(prevState => prevState + randomNum);
+    setCells(newCells);
   };
+
 
   function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
@@ -137,7 +179,15 @@ function App() {
       <Button onClick={ movePlayer }>Button</Button>
       <Parent>
         { cells.map(item => (
-          <Cell key={ item.id } move={ item.move } gridArea={ item.gridArea }>data</Cell>
+          <Cell
+            key={ item.id }
+            topBorder={ item.topBorder }
+            leftBorder={ item.leftBorder }
+            rightBorder={ item.rightBorder }
+            bottomBorder={ item.bottomBorder }
+            move={ item.move }
+            gridArea={ item.gridArea }
+          >data</Cell>
         )) }
       </Parent>
     </>
